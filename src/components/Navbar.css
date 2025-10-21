@@ -212,28 +212,48 @@
     display: none !important;
   }
 }
+/* Responsive logout button in mobile dropdown */
+@media (max-width: 767px) {
+  .dropdown-menu .nav-btn.logout {
+    background: none;
+    border: none;
+    color: #53a2cc;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 0.4rem 1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    text-shadow: 0 0 4px rgba(0, 210, 255, 0.2);
+    transition: all 0.3s ease-in-out;
+  }
+
+}
 
 
-/* Buttons inside mobile dropdown */
-.dropdown-menu button {
+
+
+.dropdown-menu .nav-link,
+.dropdown-menu .nav-btn.logout {
   background: none;
   border: none;
   color: #53a2cc;
-  font-weight: 500;
   font-size: 1.1rem;
+  font-weight: 500;
   padding: 0.4rem 1rem;
   border-radius: 12px;
   cursor: pointer;
-  text-align: left;
   width: 100%;
+  text-align: left;
   text-shadow: 0 0 4px rgba(0, 210, 255, 0.2);
   transition: all 0.3s ease-in-out;
 }
-
-.dropdown-menu button:hover {
+/* 
+.dropdown-menu .nav-link:hover,
+.dropdown-menu .nav-btn.logout:hover {
   background: linear-gradient(145deg, rgba(0, 210, 255, 0.15), rgba(0, 114, 255, 0.1));
   color: #00d2ff;
   box-shadow: 0 0 15px rgba(1, 180, 228, 0.6);
   transform: scale(1.05);
-}
-
+} */

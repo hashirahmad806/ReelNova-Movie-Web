@@ -157,7 +157,7 @@ function Navbar() {
           {user ? (
             <>
               <li   className="nav-link">
-                <button onClick={handleLogout} className="nav-btn logout">
+                <button onClick={handleLogout} className="nav-link">
                   Logout
                 </button>
               </li>
@@ -184,29 +184,33 @@ function Navbar() {
 
       {/* Mobile Dropdown Menu */}
       {isOpen && (
-        <ul className="dropdown-menu">
-          <li><Link to="/" onClick={() => setIsOpen(false)}>Home</Link></li>
-          <li><Link to="/about" onClick={() => setIsOpen(false)}>About</Link></li>
-          <li><Link to="/favorites" onClick={() => setIsOpen(false)}>Favorites</Link></li>
-          <li><Link to="/contact" onClick={() => setIsOpen(false)}>Contact</Link></li>
+  <ul className="dropdown-menu">
+    <li><Link to="/" onClick={() => setIsOpen(false)}>Home</Link></li>
+    <li><Link to="/about" onClick={() => setIsOpen(false)}>About</Link></li>
+    <li><Link to="/favorites" onClick={() => setIsOpen(false)}>Favorites</Link></li>
+    <li><Link to="/contact" onClick={() => setIsOpen(false)}>Contact</Link></li>
 
-          {user ? (
-            <>
-              <li>
-                <button onClick={handleLogout} className="nav-links">
-                  Logout
-                </button>
-              </li>
-            </>
-          ) : (
-            <li>
-              <Link to="/login" onClick={() => setIsOpen(false)}>
-                <button className="nav-link">Login</button>
-              </Link>
-            </li>
-          )}
-        </ul>
-      )}
+    {user ? (
+      <li>
+        <button onClick={handleLogout} className="nav-link">
+          Logout
+        </button>
+      </li>
+    ) : (
+      <li>
+        <Link to="/login" onClick={() => setIsOpen(false)}>
+          <button className="nav-link">Login</button>
+        </Link>
+      </li>
+    )}
+  </ul>
+)}
+
+
+
+
+
+
     </nav>
   );
 }
