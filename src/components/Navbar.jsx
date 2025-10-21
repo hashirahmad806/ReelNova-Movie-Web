@@ -1,70 +1,50 @@
 
 
 
-// import React, { useState } from 'react';
-// import './Navbar.css';
-
-// function Navbar() {
-//   const [isOpen, setIsOpen] = useState(false);
-
-//   const toggleMenu = () => {
-//     setIsOpen(!isOpen);
-//   };
-
-//   const closeMenu = () => {
-//     setIsOpen(false);
-//   };
-
-//   return (
-//     <nav className="navbar">
-//       <div className="container">
-//         <div className="brand" onClick={closeMenu}>ReelNova</div>
-
-//         <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
-//           <li><a href="/" className="nav-link" onClick={closeMenu}>Home</a></li>
-//           <li><a href="/favorites" className="nav-link" onClick={closeMenu}>Favorite</a></li>
-//           <li><a href="/about" className="nav-link" onClick={closeMenu}>About</a></li>
-//           <li><a href="/contact" className="nav-link" onClick={closeMenu}>Contact</a></li>
-//           <li><a href="/login" className="nav-link mobile-login" onClick={closeMenu}>Login Now</a></li>
-//         </ul>
-
-//         {/* <button className="nav-btn">
-//           <a href="/login">Login Now</a>
-//         </button> */}
-
-//         {/* Hamburger Icon */}
-//         <div
-//           className={`hamburger ${isOpen ? 'active' : ''}`}
-//           onClick={toggleMenu}
-//         >
-//           <span></span>
-//           <span></span>
-//           <span></span>
-//         </div>
-//       </div>
-
-//       {/* Overlay background when menu is open */}
-//       {isOpen && <div className="overlay" onClick={closeMenu}></div>}
-//     </nav>
-//   );
-// }
-
-// export default Navbar;
-
-
-
-// import React, { useState } from "react";
+// import React, { useState, useEffect } from "react";
 // import "./Navbar.css";
-// import { Link } from "react-router-dom";
+// import { Link, useLocation } from "react-router-dom";
+
+// import { useAuth } from '../context/AuthContext';
+// import { useNavigate } from 'react-router-dom';
 
 // function Navbar() {
 //   const [isOpen, setIsOpen] = useState(false);
+//   const location = useLocation();
+
+
+// const { user, logout } = useAuth();
+//   const navigate = useNavigate();
+
+//   const handleLogout = async () => {
+//     try {
+//       await logout();        // Deletes the current session & clears user in context
+//       navigate('/login');    // Redirect to login page after logout
+//     } catch (error) {
+//       console.error('Logout failed:', error);
+//     }
+//   };
+
+//   // Close dropdown on route change
+//   useEffect(() => {
+//     setIsOpen(false);
+//   }, [location.pathname]);
 
 //   return (
 //     <nav className="navbar">
 //       <div className="container">
 //         <div className="brand">Reel Nova</div>
 
+//         {/* Row menu for large screens */}
+//         <ul className="nav-links">
+//           <li><Link to="/">Home</Link></li>
+//           <li><Link to="/about">About</Link></li>
+//           <li><Link to="/favorites">Favorites</Link></li>
+//           <li><Link to="/contact">Contact</Link></li>
+//           <li><Link to="/login">Login Now</Link></li>
+//         </ul>
+
+//         {/* Hamburger for small screens */}
 //         <div
 //           className={`hamburger ${isOpen ? "active" : ""}`}
 //           onClick={() => setIsOpen(!isOpen)}
@@ -75,14 +55,35 @@
 //         </div>
 //       </div>
 
-//       {/* Dropdown Menu */}
+// <div>
+//         {user ? (
+//           <>
+//             <span className="text-gray-300 mr-4">Hello, {user.name || user.email}</span>
+//             <button
+//               onClick={handleLogout}
+//               className="bg-red-600 px-4 py-2 rounded hover:bg-red-700 transition"
+//             >
+//               Logout
+//             </button>
+//           </>
+//         ) : (
+//           <button
+//             onClick={() => navigate('/login')}
+//             className="bg-indigo-600 px-4 py-2 rounded hover:bg-indigo-700 transition"
+//           >
+//             Login
+//           </button>
+//         )}
+//       </div>
+
+//       {/* Dropdown for mobile */}
 //       {isOpen && (
 //         <ul className="dropdown-menu">
 //           <li><Link to="/" onClick={() => setIsOpen(false)}>Home</Link></li>
 //           <li><Link to="/about" onClick={() => setIsOpen(false)}>About</Link></li>
 //           <li><Link to="/favorites" onClick={() => setIsOpen(false)}>Favorites</Link></li>
 //           <li><Link to="/contact" onClick={() => setIsOpen(false)}>Contact</Link></li>
-//           <li><Link to="/login" onClick={() => setIsOpen(false)}>Login Now </Link></li>
+//           <li><Link to="/login" onClick={() => setIsOpen(false)}>Login Now</Link></li>
 //         </ul>
 //       )}
 //     </nav>
@@ -93,13 +94,44 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// src/components/Navbar.jsx
+
 import React, { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import "./Navbar.css";
-import { Link, useLocation } from "react-router-dom";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   // Close dropdown on route change
   useEffect(() => {
@@ -109,18 +141,37 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="container">
-        <div className="brand">Reel Nova</div>
+        {/* Brand */}
+        <div className="brand" onClick={() => navigate("/")}>
+          Reel Nova
+        </div>
 
-        {/* Row menu for large screens */}
+        {/* Desktop Navigation */}
         <ul className="nav-links">
           <li><Link to="/">Home</Link></li>
           <li><Link to="/about">About</Link></li>
           <li><Link to="/favorites">Favorites</Link></li>
           <li><Link to="/contact">Contact</Link></li>
-          <li><Link to="/login">Login Now</Link></li>
+
+          {/* Conditional Login/Logout */}
+          {user ? (
+            <>
+              <li   className="nav-link">
+                <button onClick={handleLogout} className="nav-btn logout">
+                  Logout
+                </button>
+              </li>
+            </>
+          ) : (
+            <li>
+              <Link to="/login">
+                <button   className="nav-link">Login</button>
+              </Link>
+            </li>
+          )}
         </ul>
 
-        {/* Hamburger for small screens */}
+        {/* Hamburger Icon for Mobile */}
         <div
           className={`hamburger ${isOpen ? "active" : ""}`}
           onClick={() => setIsOpen(!isOpen)}
@@ -131,14 +182,30 @@ function Navbar() {
         </div>
       </div>
 
-      {/* Dropdown for mobile */}
+      {/* Mobile Dropdown Menu */}
       {isOpen && (
         <ul className="dropdown-menu">
           <li><Link to="/" onClick={() => setIsOpen(false)}>Home</Link></li>
           <li><Link to="/about" onClick={() => setIsOpen(false)}>About</Link></li>
           <li><Link to="/favorites" onClick={() => setIsOpen(false)}>Favorites</Link></li>
           <li><Link to="/contact" onClick={() => setIsOpen(false)}>Contact</Link></li>
-          <li><Link to="/login" onClick={() => setIsOpen(false)}>Login Now</Link></li>
+
+          {user ? (
+            <>
+              <li className="brand">Hi, {user.name || user.email}</li>
+              <li>
+                <button onClick={handleLogout} className="nav-btn logout">
+                  Logout
+                </button>
+              </li>
+            </>
+          ) : (
+            <li>
+              <Link to="/login" onClick={() => setIsOpen(false)}>
+                <button className="nav-btn login">Login</button>
+              </Link>
+            </li>
+          )}
         </ul>
       )}
     </nav>
