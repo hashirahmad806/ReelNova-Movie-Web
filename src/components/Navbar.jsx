@@ -192,9 +192,8 @@ function Navbar() {
 
           {user ? (
             <>
-              <li className="brand">Hi, {user.name || user.email}</li>
               <li>
-                <button onClick={handleLogout} className="nav-btn logout">
+                <button onClick={handleLogout} className="nav-links">
                   Logout
                 </button>
               </li>
@@ -202,7 +201,7 @@ function Navbar() {
           ) : (
             <li>
               <Link to="/login" onClick={() => setIsOpen(false)}>
-                <button className="nav-btn login">Login</button>
+                <button className="nav-link">Login</button>
               </Link>
             </li>
           )}
